@@ -1,0 +1,18 @@
+﻿<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="~/custom/adminPanel/adminPanel.css" media="all" />
+
+
+<div id="mySidebar" class="sidebar">
+    <div class="adminSidebarTitle">
+        <h2 style="color:#ffdd99; font-size:36px;">Admin</h2>
+    </div>
+    <a asp-area="Administration" asp-controller="Departments" asp-action="Create">Add Department</a>
+    <a asp-area="Administration" asp-controller="Services" asp-action="Create">Add Service</a>
+    <a asp-area="Administration" asp-controller="Employees" asp-action="Employees">Employees</a>
+</div>
+
+<div id="main">
+    <button id="openSideBarBtn" class="openbtn" onclick="openNav()">☰</button>
+</div>
+
+<script src="~/custom/adminPanel/adminPanel.js"></script>
