@@ -1,0 +1,14 @@
+﻿@using CarCatalogue.Models.Response;
+
+@model BaseResponse<CarResponseModel>
+
+<div>
+    @if (Model.IsSuccess)
+    {
+        <h1>Car: @(Model.Content!.Make)</h1>
+    }
+    else
+    {
+        <h1>@Model.ErrorMessage</h1>
+    }
+</div>

@@ -1,4 +1,6 @@
 using CarCatalogue.Data;
+using CarCatalogue.Services;
+using CarCatalogue.Services.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using static System.Formats.Asn1.AsnWriter;
@@ -28,6 +30,10 @@ namespace CarCatalogue
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
+
+            // Custom services
+            builder.Services.AddTransient<ICarStorageService, CarStorageService>();
+            builder.Services.AddTransient<ICarApiService, CarApiService>();
 
             var app = builder.Build();
             DbInitializer.Initialize(app);
