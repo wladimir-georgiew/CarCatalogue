@@ -5,6 +5,7 @@
 <div>
     @if (Model.IsSuccess)
     {
+        <img src="@Model.Content!.ImageUrl" />
         <h1>Car: @(Model.Content!.Make)</h1>
     }
     else

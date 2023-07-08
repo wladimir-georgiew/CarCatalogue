@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CarCatalogue.Data.Contracts;
+using System.ComponentModel.DataAnnotations;
 
 namespace CarCatalogue.Data.Entities
 {
-    public class Car
+    public class Car : DeletableEntity
     {
         [Key]
         public int Id { get; set; }
@@ -18,5 +19,7 @@ namespace CarCatalogue.Data.Entities
         public double Acceleration { get; set; }
 
         public int Weight { get; set; }
+
+        public string? ImageUrl { get; set; }
     }
 }

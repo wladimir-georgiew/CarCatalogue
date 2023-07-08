@@ -32,6 +32,7 @@ namespace CarCatalogue.Services
                 Horsepower = car.Horsepower,
                 Weight = car.Weight,
                 Year = car.Year,
+                ImageUrl = car.ImageUrl,
             };
         }
     }

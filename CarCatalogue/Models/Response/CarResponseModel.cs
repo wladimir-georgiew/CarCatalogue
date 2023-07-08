@@ -13,5 +13,7 @@
         public double Acceleration { get; set; }
 
         public int Weight { get; set; }
+
+        public string? ImageUrl { get; set; }
     }
 }
