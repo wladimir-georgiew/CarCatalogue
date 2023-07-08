@@ -1,0 +1,86 @@
+﻿@using CarCatalogue.Common.Contracts;
+@model IPagination
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    var doesHaveSearchQuery = Context.Request.Query.TryGetValue("searchQuery", out Microsoft.Extensions.Primitives.StringValues searchQuery);
+}
+
+<style>
+    .pagination {
+        text-align: center;
+        justify-content: center;
+    }
+
+        .pagination a {
+            font-size: 15px;
+        }
+</style>
+
+@if (Model.HasPreviousPage || Model.HasNextPage)
+{
+    <div class="pagination">
+        <a asp-controller="Administration" asp-action="GetPaginatedAndQueriedCars"
+           asp-route-page="@(Model.PageIndex - 1)"
+           asp-route-searchQuery="@searchQuery"
+           class="btn btn-default @prevDisabled">
+            Previous
+        </a>
+
+        @*Three Previos Pages*@
+        @for (int i = 0; i < Model.ThreePreviousPages.Length; i++)
+        {
+            var page = Model.ThreePreviousPages[i];
+            string text = page.ToString();
+            if (i == 0 &&
+                page > 1)
+            {
+                text = $".. {page}";
+            }
+
+            <a asp-controller="Administration" asp-action="GetPaginatedAndQueriedCars"
+               asp-route-page="@(page)"
+               asp-route-searchQuery="@searchQuery"
+               class="btn btn-default">
+                @(text)
+            </a>
+        }
+
+        @*Current Page*@
+        <a asp-controller="Administration" asp-action="GetPaginatedAndQueriedCars"
+           asp-route-page="@(Model.PageIndex)"
+           asp-route-searchQuery="@searchQuery"
+           class="btn btn-default font-weight-bold disabled">
+            @(Model.PageIndex)
+        </a>
+
+        @*Three Next Pages*@
+        @for (int i = 0; i < Model.ThreeNextPages.Length; i++)
+        {
+            var page = Model.ThreeNextPages[i];
+            string text = page.ToString();
+            if (i == Model.ThreeNextPages.Length - 1 &&
+                page < Model.TotalPages)
+            {
+                text = $"{page} ..";
+            }
+
+            <a asp-controller="Administration" asp-action="GetPaginatedAndQueriedCars"
+               asp-route-page="@(page)"
+               asp-route-searchQuery="@searchQuery"
+               class="btn btn-default">
+                @(text)
+            </a>
+        }
+
+
+        <a asp-controller="Administration" asp-action="GetPaginatedAndQueriedCars"
+           asp-route-page="@(Model.PageIndex + 1)"
+           asp-route-searchQuery="@searchQuery"
+           class="btn btn-default @nextDisabled">
+            Next
+        </a>
+
+    </div>
+}

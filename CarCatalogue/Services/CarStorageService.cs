@@ -16,5 +16,7 @@ namespace CarCatalogue.Services
         }
 
         public async Task<Car?> GetByIdAsync(int id) => await _context.Cars.FirstOrDefaultAsync(c => c.Id == id);
+
+        public IEnumerable<Car> GetAll() => _context.Cars;
     }
 }

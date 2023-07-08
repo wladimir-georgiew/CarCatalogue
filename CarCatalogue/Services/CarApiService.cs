@@ -26,6 +26,7 @@ namespace CarCatalogue.Services
 
             return new CarResponseModel
             {
+                Id = car.Id,
                 Make = car.Make,
                 Model = car.Model,
                 Acceleration = car.Acceleration,

@@ -1,0 +1,115 @@
+﻿@using CarCatalogue.Models.Response;
+
+@model PaginatedCarsResponseModel
+@{
+    Context.Request.Query.TryGetValue("searchQuery", out Microsoft.Extensions.Primitives.StringValues currentSearchQuery);
+}
+
+<script src="~/Scripts/jquery-1.9.1.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<script src="~/Scripts/employee.js"></script>
+
+<div class="container">
+    <form>
+        <div class="search">
+            <input autocomplete="off" name="searchQuery" value="@currentSearchQuery" type="text" class="searchTerm" placeholder="Search..">
+            <button type="submit" class="searchButton">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+    </form>
+
+    <h2>All Cars</h2>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="clearTextBox();">Add New Car</button><br /><br />
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+
+                </th>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Make
+                </th>
+                <th>
+                    Model
+                </th>
+                <th>
+                    Year
+                </th>
+                <th>
+                    Horsepower
+                </th>
+                <th>
+                    Acceleration
+                </th>
+                <th>
+                    Weight(kg)
+                </th>
+            </tr>
+        </thead>
+        <tbody class="tbody">
+            @foreach (var car in Model.Items)
+            {
+                <tr></tr>
+                <td><img src="@car.ImageUrl" /></td>
+                <td>@car.Id</td>
+                <td>@car.Make</td>
+                <td>@car.Model</td>
+                <td>@car.Year.Value.Year</td>
+                <td>@car.Horsepower</td>
+                <td>@car.Acceleration</td>
+                <td>@car.Weight</td>
+            }
+        </tbody>
+    </table>
+</div>
+
+@*Pagination*@
+<partial name="../Shared/_Pagination.cshtml" model=@Model />
+@*Pagination*@
+
+@*MODAL*@
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title" id="myModalLabel">Add Employee</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="EmployeeId">ID</label>
+                        <input type="text" class="form-control" id="EmployeeID" placeholder="Id" disabled="disabled" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Name</label>
+                        <input type="text" class="form-control" id="Name" placeholder="Name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Age">Age</label>
+                        <input type="text" class="form-control" id="Age" placeholder="Age" />
+                    </div>
+                    <div class="form-group">
+                        <label for="State">State</label>
+                        <input type="text" class="form-control" id="State" placeholder="State" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Country">Country</label>
+                        <input type="text" class="form-control" id="Country" placeholder="Country" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnAdd" onclick="return Add();">Add</button>
+                <button type="button" class="btn btn-primary" id="btnUpdate" style="display:none;" onclick="Update();">Update</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
