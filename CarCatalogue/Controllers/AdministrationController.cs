@@ -1,6 +1,7 @@
 ﻿using CarCatalogue.Common;
 using CarCatalogue.Common.Constants;
 using CarCatalogue.Data.Entities;
+using CarCatalogue.Models.Request;
 using CarCatalogue.Models.Response;
 using CarCatalogue.Services.Contracts;
 
@@ -12,18 +13,39 @@ namespace CarCatalogue.Controllers
     [Authorize(Roles = Roles.ADMIN)]
     public class AdministrationController : Controller
     {
-        private readonly ICarStorageService _carStorageService;
+        private readonly ICarApiService _carApiService;
 
-        public AdministrationController(ICarStorageService carStorageService)
+        public AdministrationController(ICarApiService carApiService)
         {
-            _carStorageService = carStorageService;
+            _carApiService = carApiService;
         }
 
-        public IActionResult CreateCar()
+        public async Task<IActionResult> CreateCar(CarRequestModel request)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                // TODO ===========================================
+                // Refactor by adding BaseReponse model to the view
+                // TODO ===========================================
+                return View(GetPaginatedAndQueriedCars());
+            }
+
+            try
+            {
+                await _carApiService.AddAsync(request);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return View(GetPaginatedAndQueriedCars());
         }
 
+        // TODO ==================================================================================
+        // Refactor by adding the logic to the CarApi service layer and return BaseResponse model.
+        // Also refactor the _Pagination and ListAllCars views. ==================================
+        // TODO ==================================================================================
         public IActionResult GetPaginatedAndQueriedCars(int page = 1, string searchQuery = "")
         {
             // Prevents from getting an error when clicking the search button with empty input ( ?searchQuery= )
@@ -43,11 +65,12 @@ namespace CarCatalogue.Controllers
             x.Model.ToLower().Contains(searchQueryLower) ||
             x.Make.ToLower().Contains(searchQueryLower) : true;
 
-            var productModels = _carStorageService
+            var cars = _carApiService
                 .GetAll()
-                .Where(searchQuery.Length > 5 ? filterByStartsWith : filterByContains);
+                .Where(searchQuery.Length > 5 ? filterByStartsWith : filterByContains)
+                .OrderByDescending(x => x.CreatedOn);
 
-            var paginatedCars = PaginationList<Car>.Create(productModels, page, 12);
+            var paginatedCars = PaginationList<Car>.Create(cars, page, 12);
 
             var viewModel = new PaginatedCarsResponseModel
             {

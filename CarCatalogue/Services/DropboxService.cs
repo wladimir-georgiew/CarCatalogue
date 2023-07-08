@@ -1,33 +1,24 @@
-﻿using CarCatalogue.Common.Constants;
-
+﻿using Dropbox.Api.Files;
 using Dropbox.Api;
-using Dropbox.Api.Files;
 
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+using CarCatalogue.Services.Contracts;
 
-namespace CarCatalogue.Controllers
+namespace CarCatalogue.Services
 {
-    [Route("[controller]")]
-    public class DropboxController : Controller
+    public class DropboxService : IDropboxService
     {
         private readonly IConfiguration _configuration;
 
-        public DropboxController(IConfiguration configuration)
+        public DropboxService(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
-        [HttpPost]
-        [Route("upload")]
-        [Authorize(Roles = Roles.ADMIN)]
-        public async Task<IActionResult> Upload(string folderName, string fileName, IFormFile content)
+        public async Task<string> UploadAsync(string folderName, string fileName, IFormFile content)
         {
             var accessToken = _configuration.GetValue<string>("DropBox:AccessToken");
 
             using var dbx = new DropboxClient(accessToken);
-
-            var account = await dbx.Users.GetCurrentAccountAsync();
 
             var path = $"/{folderName}/{fileName}";
 
@@ -42,7 +33,7 @@ namespace CarCatalogue.Controllers
             // Removing the dl=0 parameter and adding raw=1 to make the link lead to the raw image, instead of dropbox website.
             var imageLink = link.TrimEnd(new char[] { 'd', 'l', '=', '0' }) + "raw=1";
 
-            return Ok(imageLink);
+            return imageLink;
         }
     }
 }

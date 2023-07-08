@@ -5,10 +5,8 @@
     Context.Request.Query.TryGetValue("searchQuery", out Microsoft.Extensions.Primitives.StringValues currentSearchQuery);
 }
 
-<script src="~/Scripts/jquery-1.9.1.js"></script>
-<script src="~/Scripts/bootstrap.js"></script>
-<link href="~/Content/bootstrap.css" rel="stylesheet" />
-<script src="~/Scripts/employee.js"></script>
+<link rel="stylesheet" href="~/css/listAllCarsPage/style.css" />
+<script src="~/js/site.js"></script>
 
 <div class="container">
     <form>
@@ -21,7 +19,7 @@
     </form>
 
     <h2>All Cars</h2>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="clearTextBox();">Add New Car</button><br /><br />
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" onclick="clearTextBox();">Add New Car</button><br /><br />
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
@@ -55,7 +53,7 @@
             @foreach (var car in Model.Items)
             {
                 <tr></tr>
-                <td><img src="@car.ImageUrl" /></td>
+                <td class="td-card"><img class="img-card" src="@car.ImageUrl" /></td>
                 <td>@car.Id</td>
                 <td>@car.Make</td>
                 <td>@car.Model</td>
@@ -63,6 +61,7 @@
                 <td>@car.Horsepower</td>
                 <td>@car.Acceleration</td>
                 <td>@car.Weight</td>
+            <td><a href="#" onclick="return getbyID('@car.Id')">Edit</a> | <a href="#" onclick="Delete('@car.Id')">Delete</a></td>
             }
         </tbody>
     </table>
@@ -78,37 +77,44 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">×</button>
-                <h4 class="modal-title" id="myModalLabel">Add Employee</h4>
+                <h4 class="modal-title" id="myModalLabel">Add Car</h4>
             </div>
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="EmployeeId">ID</label>
-                        <input type="text" class="form-control" id="EmployeeID" placeholder="Id" disabled="disabled" />
+                        <label for="Make">Make</label>
+                        <input type="text" class="form-control" id="Make" placeholder="Make" />
                     </div>
                     <div class="form-group">
-                        <label for="Name">Name</label>
-                        <input type="text" class="form-control" id="Name" placeholder="Name" />
+                        <label for="Model">Model</label>
+                        <input type="text" class="form-control" id="Model" placeholder="Model" />
                     </div>
                     <div class="form-group">
-                        <label for="Age">Age</label>
-                        <input type="text" class="form-control" id="Age" placeholder="Age" />
+                        <label for="Year">Year</label>
+                        <input type="text" class="form-control" id="Year" placeholder="Year" />
                     </div>
                     <div class="form-group">
-                        <label for="State">State</label>
-                        <input type="text" class="form-control" id="State" placeholder="State" />
+                        <label for="Horsepower">Horsepower</label>
+                        <input type="text" class="form-control" id="Horsepower" placeholder="Horsepower" />
                     </div>
                     <div class="form-group">
-                        <label for="Country">Country</label>
-                        <input type="text" class="form-control" id="Country" placeholder="Country" />
+                        <label for="Acceleration">Acceleration</label>
+                        <input type="text" class="form-control" id="Acceleration" placeholder="Acceleration" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Weight">Weight</label>
+                        <input type="text" class="form-control" id="Weight" placeholder="Weight" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Image">Image</label>
+                        <input type="file" class="form-control" id="ImageUpload" placeholder="Image" />
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="btnAdd" onclick="return Add();">Add</button>
                 <button type="button" class="btn btn-primary" id="btnUpdate" style="display:none;" onclick="Update();">Update</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

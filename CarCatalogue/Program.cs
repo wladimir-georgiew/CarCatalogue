@@ -1,9 +1,9 @@
 using CarCatalogue.Data;
 using CarCatalogue.Services;
 using CarCatalogue.Services.Contracts;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace CarCatalogue
 {
@@ -34,6 +34,7 @@ namespace CarCatalogue
             // Custom services
             builder.Services.AddTransient<ICarStorageService, CarStorageService>();
             builder.Services.AddTransient<ICarApiService, CarApiService>();
+            builder.Services.AddTransient<IDropboxService, DropboxService>();
 
             var app = builder.Build();
             DbInitializer.Initialize(app);

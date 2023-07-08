@@ -1,0 +1,10 @@
+﻿.img-card {
+    width: 80%;
+    height: 128px;
+    min-width: 128px;
+    max-width: 296px;
+}
+
+.td-card {
+    width:10%;
+}
