@@ -18,8 +18,22 @@ function clearTextBox() {
     $('#btnAdd').show();
 }
 
+function setDefaultValues() {
+    if ($('#Horsepower').val() === '') {
+        "Horsepower", $('#Horsepower').val(0);
+    }
+    if ($('#Acceleration').val() === '') {
+        "Acceleration", $('#Acceleration').val(0);
+    }
+    if ($('#Weight').val() === '') {
+        "Weight", $('#Weight').val(0);
+    }
+}
+
 //Add Data Function   
 function Add() {
+    setDefaultValues();
+
     var files = $('#ImageUpload').prop("files");
     formData = new FormData();
 
@@ -42,6 +56,7 @@ function Add() {
         },
         error: function (errormessage) {
             $('#ValidationSummary').text('');
+            setDefaultValues();
 
             $.each(errormessage.responseJSON, function (key, item) {
                 $('#ValidationSummary').append(item);
