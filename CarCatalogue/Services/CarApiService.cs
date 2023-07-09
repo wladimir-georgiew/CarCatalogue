@@ -86,7 +86,7 @@ namespace CarCatalogue.Services
             await _carStorageService.SaveChangesAsync();
         }
 
-        public IEnumerable<Car> GetAll() => _carStorageService.GetAll();
+        public IEnumerable<Car> GetAll() => _carStorageService.GetAllWithoutDeleted();
 
         public PaginatedCarsResponseModel? GetPaginatedAndFilteredCars(string searchQuery, int page)
         {
@@ -141,7 +141,7 @@ namespace CarCatalogue.Services
 
         public IEnumerable<CarResponseModel>? GetMostRecentCars(int count)
         {
-            return _carStorageService.GetAll()
+            return _carStorageService.GetAllWithoutDeleted()
                 .OrderByDescending(car => car.CreatedOrModifiedOn)
                 .Take(count)
                 .Select(car => new CarResponseModel
@@ -156,6 +156,21 @@ namespace CarCatalogue.Services
                     ImageUrl = car.ImageUrl,
                 })
                 .ToList();
+        }
+
+        public async Task Remove(int id)
+        {
+            var car = await _carStorageService.GetByIdAsync(id);
+
+            if (car == null)
+            {
+                _logger.LogWarning($"Car with id {id} not found in the database.");
+                throw new Exception("Car not found.");
+            }
+
+            car.DeletedOn = DateTime.Now;
+
+            await _carStorageService.SaveChangesAsync();
         }
 
         private async Task<string?> UploadImageToDropbox(CarRequestModel request)

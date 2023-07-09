@@ -6,8 +6,10 @@ namespace CarCatalogue.Services.Contracts
     {
         Task<Car?> GetByIdAsync(int id);
         IEnumerable<Car> GetAll();
+        IEnumerable<Car> GetAllWithoutDeleted();
         Task AddAsync(Car car);
         void Update(Car car);
+        void HardDelete(Car car);
         Task SaveChangesAsync();
     }
 }

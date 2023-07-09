@@ -19,9 +19,13 @@ namespace CarCatalogue.Services
 
         public IEnumerable<Car> GetAll() => _context.Cars;
 
+        public IEnumerable<Car> GetAllWithoutDeleted() => _context.Cars.Where(x => x.DeletedOn == null);
+
         public async Task AddAsync(Car car) => await _context.Cars.AddAsync(car);
 
         public void Update(Car car) => _context.Cars.Update(car);
+
+        public void HardDelete (Car car) => _context.Cars.Remove(car);
 
         public async Task SaveChangesAsync() => await _context.SaveChangesAsync();
     }

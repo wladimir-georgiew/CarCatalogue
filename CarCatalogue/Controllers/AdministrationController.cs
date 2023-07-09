@@ -70,6 +70,25 @@ namespace CarCatalogue.Controllers
         }
 
         /// <summary>
+        /// Deletes a car in the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> DeleteCar(int id)
+        {
+            try
+            {
+                await _carApiService.Remove(id);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Gets a paginated list of cars, filtered, if filter query is present, if it's not, it gets the 12 most recently added records.
         /// </summary>
         /// <param name="page"></param>

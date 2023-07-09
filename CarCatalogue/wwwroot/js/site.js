@@ -157,14 +157,28 @@ function getbyID(carId) {
             $('#btnUpdate').show();
             $('#btnAdd').hide();
 
-            console.log(result);
-            console.log(result.Id);
-            console.log(result.id);
-
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
         }
     });
     return false;
-} 
+}
+
+function Delete(Id) {
+    var confirmation = confirm("Are you sure you want to delete this Record?");
+    if (confirmation) {
+        $.ajax({
+            url: "/Administration/DeleteCar/" + Id,
+            type: "POST",
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (result) {
+                ReloadData();
+            },
+            error: function (errormessage) {
+                ReloadData();
+            }
+        });
+    }
+}  

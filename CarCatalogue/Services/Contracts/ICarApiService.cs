@@ -12,5 +12,6 @@ namespace CarCatalogue.Services.Contracts
         IEnumerable<Car> GetAll();
         PaginatedCarsResponseModel? GetPaginatedAndFilteredCars(string searchQuery, int page);
         IEnumerable<CarResponseModel>? GetMostRecentCars(int count);
+        Task Remove(int id);
     }
 }
