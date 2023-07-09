@@ -1,6 +1,4 @@
-﻿using CarCatalogue.Models;
-using CarCatalogue.Models.Response;
-using CarCatalogue.Services.Contracts;
+﻿using CarCatalogue.Services.Contracts;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,22 +20,12 @@ namespace CarCatalogue.Controllers
         {
             try
             {
-                var car = await _carApiService.GetByIdAsync(id);
-                var response = new BaseResponse<CarResponseModel>
-                {
-                    Content = car
-                };
-
-                return View(response);
+                var carResponse = await _carApiService.GetByIdAsync(id);
+                return View(carResponse);
             }
             catch (Exception ex)
             {
-                var response = new BaseResponse<CarResponseModel>(false)
-                {
-                    ErrorMessage = ex.Message
-                };
-
-                return View(response);
+                return BadRequest(ex.Message);
             }
         }
     }

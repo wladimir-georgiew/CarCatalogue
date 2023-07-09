@@ -8,3 +8,8 @@
 .td-card {
     width:10%;
 }
+
+.validation-create {
+    text-align: left;
+    list-style: none;
+}

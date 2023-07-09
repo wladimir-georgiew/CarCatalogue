@@ -1,15 +1,8 @@
 ﻿@using CarCatalogue.Models.Response;
 
-@model BaseResponse<CarResponseModel>
+@model CarResponseModel
 
 <div>
-    @if (Model.IsSuccess)
-    {
-        <img src="@Model.Content!.ImageUrl" />
-        <h1>Car: @(Model.Content!.Make)</h1>
-    }
-    else
-    {
-        <h1>@Model.ErrorMessage</h1>
-    }
+    <img src="@Model.ImageUrl" />
+    <h1>Car: @(Model.Make)</h1>
 </div>

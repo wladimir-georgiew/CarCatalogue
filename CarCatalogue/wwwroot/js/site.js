@@ -6,6 +6,7 @@
 
 //Function for clearing the textboxes  
 function clearTextBox() {
+    $('#ValidationSummary').text('');
     $('#Make').val("");
     $('#Model').val("");
     $('#Year').val("");
@@ -37,11 +38,15 @@ function Add() {
         contentType: false,
         processData: false,
         success: function (result) {
-            loadData();
             $('#myModal').modal('hide');
         },
         error: function (errormessage) {
-            alert(errormessage.responseText);
+            $('#ValidationSummary').text('');
+
+            $.each(errormessage.responseJSON, function (key, item) {
+                $('#ValidationSummary').append(item);
+                $('#ValidationSummary').append('<br>');
+            });
         }
     });
 }

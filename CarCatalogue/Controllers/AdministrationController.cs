@@ -1,6 +1,4 @@
-﻿using CarCatalogue.Common;
-using CarCatalogue.Common.Constants;
-using CarCatalogue.Data.Entities;
+﻿using CarCatalogue.Common.Constants;
 using CarCatalogue.Models.Request;
 using CarCatalogue.Models.Response;
 using CarCatalogue.Services.Contracts;
@@ -14,87 +12,49 @@ namespace CarCatalogue.Controllers
     public class AdministrationController : Controller
     {
         private readonly ICarApiService _carApiService;
+        private readonly ILogger<AdministrationController> _logger;
 
-        public AdministrationController(ICarApiService carApiService)
+        public AdministrationController(
+            ICarApiService carApiService,
+            ILogger<AdministrationController> logger)
         {
             _carApiService = carApiService;
+            _logger = logger;
         }
 
         public async Task<IActionResult> CreateCar(CarRequestModel request)
         {
             if (!ModelState.IsValid)
             {
-                // TODO ===========================================
-                // Refactor by adding BaseReponse model to the view
-                // TODO ===========================================
-                return View(GetPaginatedAndQueriedCars());
+                return BadRequest(ModelState);
             }
 
             try
             {
                 await _carApiService.AddAsync(request);
+                return Redirect(nameof(GetPaginatedAndQueriedCars));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _logger.LogError(ex, ex.Message);
+                return BadRequest(ErrorMessages.GENERIC_ERROR_MESSAGE);
             }
-
-            return View(GetPaginatedAndQueriedCars());
         }
 
-        // TODO ==================================================================================
-        // Refactor by adding the logic to the CarApi service layer and return BaseResponse model.
-        // Also refactor the _Pagination and ListAllCars views. ==================================
-        // TODO ==================================================================================
         public IActionResult GetPaginatedAndQueriedCars(int page = 1, string searchQuery = "")
         {
-            // Prevents from getting an error when clicking the search button with empty input ( ?searchQuery= )
-            if (searchQuery is null)
+            var viewPath = "~/Views/Administration/ListAllCars.cshtml";
+
+            try
             {
-                searchQuery = string.Empty;
+                var viewModel = _carApiService.GetPaginatedAndFilteredCars(searchQuery, page);
+                return View(viewPath, viewModel);
             }
-
-            var isQueryNull = string.IsNullOrEmpty(searchQuery);
-            var searchQueryLower = !isQueryNull ? searchQuery.ToLower() : searchQuery;
-
-            Func<Car, bool> filterByStartsWith = (x) => !isQueryNull ?
-            x.Model.ToLower().StartsWith(searchQueryLower) ||
-            x.Make.ToLower().StartsWith(searchQueryLower) : true;
-
-            Func<Car, bool> filterByContains = (x) => !isQueryNull ?
-            x.Model.ToLower().Contains(searchQueryLower) ||
-            x.Make.ToLower().Contains(searchQueryLower) : true;
-
-            var cars = _carApiService
-                .GetAll()
-                .Where(searchQuery.Length > 5 ? filterByStartsWith : filterByContains)
-                .OrderByDescending(x => x.CreatedOn);
-
-            var paginatedCars = PaginationList<Car>.Create(cars, page, 12);
-
-            var viewModel = new PaginatedCarsResponseModel
+            catch (Exception ex)
             {
-                PageIndex = paginatedCars.PageIndex,
-                ThreeNextPages = paginatedCars.ThreeNextPages,
-                ThreePreviousPages = paginatedCars.ThreePreviousPages,
-                TotalPages = paginatedCars.TotalPages,
-                HasNextPage = paginatedCars.HasNextPage,
-                HasPreviousPage = paginatedCars.HasPreviousPage,
-                // The point of selecting here to change the return type to CarResponseModel instead of doing it directly at the paginatedCars is becase if we do it there we will be executing the .Select on all of the db records, but when we do it here we execute it only on the records we need (after the pagination).
-                Items = paginatedCars.Select(car => new CarResponseModel
-                {
-                    Id = car.Id,
-                    Make = car.Make,
-                    Model = car.Model,
-                    Acceleration = car.Acceleration,
-                    Horsepower = car.Horsepower,
-                    Weight = car.Weight,
-                    Year = car.Year,
-                    ImageUrl = car.ImageUrl,
-                }),
-            };
-
-            return View("~/Views/Administration/ListAllCars.cshtml", viewModel);
+                _logger.LogError(ex, ex.Message);
+                return BadRequest(ErrorMessages.GENERIC_ERROR_MESSAGE);
+            }
         }
     }
 }
