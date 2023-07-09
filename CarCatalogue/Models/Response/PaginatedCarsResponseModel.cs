@@ -1,5 +1,4 @@
 ﻿using CarCatalogue.Common.Contracts;
-using CarCatalogue.Models.Request;
 
 namespace CarCatalogue.Models.Response
 {

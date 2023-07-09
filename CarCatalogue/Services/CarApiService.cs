@@ -1,5 +1,6 @@
 ﻿using CarCatalogue.Common;
 using CarCatalogue.Data.Entities;
+using CarCatalogue.Extensions;
 using CarCatalogue.Models.Request;
 using CarCatalogue.Models.Response;
 using CarCatalogue.Services.Contracts;
@@ -40,14 +41,14 @@ namespace CarCatalogue.Services
                 Acceleration = car.Acceleration,
                 Horsepower = car.Horsepower,
                 Weight = car.Weight,
-                Year = car.Year,
+                Year = car.Year.Value.Year,
                 ImageUrl = car.ImageUrl,
             };
         }
 
         public async Task AddAsync(CarRequestModel request)
         {
-            var imageUrl = await _dropboxService.UploadAsync("images", $"{request.Make}_{request.Model}", request.Image);
+            var imageUrl = await this.UploadImageToDropbox(request);
 
             var car = new Car()
             {
@@ -56,12 +57,32 @@ namespace CarCatalogue.Services
                 Weight= request.Weight,
                 Acceleration= request.Acceleration,
                 Horsepower= request.Horsepower,
-                Year = new DateTime(Convert.ToInt32(request.Year)),
+                Year = request.Year!.ToDateTimeYear(),
                 ImageUrl = imageUrl,
-                CreatedOn = DateTime.Now,
+                CreatedOrModifiedOn = DateTime.Now,
             };
 
             await _carStorageService.AddAsync(car);
+            await _carStorageService.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(CarRequestModel request)
+        {
+            var car = await _carStorageService.GetByIdAsync(request.Id);
+            car.Make = request.Make;
+            car.Model = request.Model;
+            car.Weight = request.Weight;
+            car.Acceleration = request.Acceleration;
+            car.Horsepower = request.Horsepower;
+            car.Year = request.Year!.ToDateTimeYear();
+            car.CreatedOrModifiedOn = DateTime.Now;
+
+            if (request.Image != null)
+            {
+                var t = request.Image.GetExtension();
+                car.ImageUrl = await this.UploadImageToDropbox(request);
+            }
+
             await _carStorageService.SaveChangesAsync();
         }
 
@@ -89,7 +110,7 @@ namespace CarCatalogue.Services
             var cars = this
                 .GetAll()
                 .Where(searchQuery.Length > 5 ? filterByStartsWith : filterByContains)
-                .OrderByDescending(x => x.CreatedOn);
+                .OrderByDescending(x => x.CreatedOrModifiedOn);
 
             var paginatedCars = PaginationList<Car>.Create(cars, page, 12);
 
@@ -110,12 +131,36 @@ namespace CarCatalogue.Services
                     Acceleration = car.Acceleration,
                     Horsepower = car.Horsepower,
                     Weight = car.Weight,
-                    Year = car.Year,
+                    Year = car.Year.Value.Year,
                     ImageUrl = car.ImageUrl,
                 }),
             };
 
             return viewModel;
+        }
+
+        public IEnumerable<CarResponseModel>? GetMostRecentCars(int count)
+        {
+            return _carStorageService.GetAll()
+                .OrderByDescending(car => car.CreatedOrModifiedOn)
+                .Take(count)
+                .Select(car => new CarResponseModel
+                {
+                    Id = car.Id,
+                    Make = car.Make,
+                    Model = car.Model,
+                    Acceleration = car.Acceleration,
+                    Horsepower = car.Horsepower,
+                    Weight = car.Weight,
+                    Year = car.Year.Value.Year,
+                    ImageUrl = car.ImageUrl,
+                })
+                .ToList();
+        }
+
+        private async Task<string?> UploadImageToDropbox(CarRequestModel request)
+        {
+            return await _dropboxService.UploadAsync("images", $"{request.Make}_{request.Model}.{request.Image.GetExtension()}", request.Image);
         }
     }
 }

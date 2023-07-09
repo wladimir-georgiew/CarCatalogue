@@ -21,6 +21,8 @@ namespace CarCatalogue.Services
 
         public async Task AddAsync(Car car) => await _context.Cars.AddAsync(car);
 
+        public void Update(Car car) => _context.Cars.Update(car);
+
         public async Task SaveChangesAsync() => await _context.SaveChangesAsync();
     }
 }

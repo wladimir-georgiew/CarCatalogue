@@ -68,7 +68,7 @@ namespace CarCatalogue.Data
                         Acceleration = car.Acceleration ?? default,
                         Horsepower = car.Horsepower ?? default,
                         Weight = (int)Math.Ceiling((double)(car.Weight_in_lbs! * 0.45359237)),
-                        CreatedOn = DateTime.Now,
+                        CreatedOrModifiedOn = DateTime.Now,
                     });
             }
 

@@ -2,7 +2,7 @@
 {
     public abstract class DeletableEntity
     {
-        public DateTime CreatedOn { get; set; }
+        public DateTime CreatedOrModifiedOn { get; set; }
 
         public DateTime? DeletedOn { get; set; }
     }

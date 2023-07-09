@@ -8,7 +8,9 @@ namespace CarCatalogue.Services.Contracts
     {
         Task<CarResponseModel?> GetByIdAsync(int id);
         Task AddAsync(CarRequestModel request);
+        Task UpdateAsync(CarRequestModel request);
         IEnumerable<Car> GetAll();
         PaginatedCarsResponseModel? GetPaginatedAndFilteredCars(string searchQuery, int page);
+        IEnumerable<CarResponseModel>? GetMostRecentCars(int count);
     }
 }

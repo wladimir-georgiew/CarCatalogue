@@ -5,30 +5,31 @@ namespace CarCatalogue.Models.Request
 {
     public class CarRequestModel
     {
+        public int Id { get; set; }
+
         [Required]
         public string? Make { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
+        [Required]
         public string? Model { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
+        [Required]
         [Range(1880, 3000, ErrorMessage = "Invalid year")]
         public string? Year { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
+        [Required]
         [Range(0, int.MaxValue, ErrorMessage = "Must be a positive number")]
         public int Horsepower { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
+        [Required]
         [Range(0, int.MaxValue, ErrorMessage = "Must be a positive number")]
         public double Acceleration { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
+        [Required]
         public int Weight { get; set; }
 
-        [Required]
         [AllowedExtensions(new[] { ".jpg", ".png", ".jpeg" })]
         [MaxFileSizeBytes(3 * 1024 * 1024)] // 3mb
-        public IFormFile? Image { get; set; }
+        public IFormFile? Image { get; set; } = null;
     }
 }

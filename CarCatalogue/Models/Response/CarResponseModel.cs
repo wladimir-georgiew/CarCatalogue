@@ -8,7 +8,7 @@
 
         public string? Model { get; set; }
 
-        public DateTime? Year { get; set; }
+        public int? Year { get; set; }
 
         public int Horsepower { get; set; }
 
