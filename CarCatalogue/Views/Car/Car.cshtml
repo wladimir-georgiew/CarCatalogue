@@ -2,7 +2,23 @@
 
 @model CarResponseModel
 
-<div>
-    <img src="@Model.ImageUrl" />
-    <h1>Car: @(Model.Make)</h1>
+<link rel="stylesheet" href="~/custom/car/style.css" />
+
+<div class="car-detail-wrapper">
+    <h1>@(Model.Make) @(Model.Model)</h1>
+
+    <div style="margin-top:3rem;" class="row">
+        <div class="col-2"></div>
+        <div class="col-4">
+            <h1>Specifications</h1>
+            <p class="p-car-detail">Year - @Model.Year</p>
+            <p class="p-car-detail">Horsepower - @Model.Horsepower</p>
+            <p class="p-car-detail">Acceleration - @Model.Acceleration</p>
+            <p class="p-car-detail">Weight - @Model.Weight kg</p>
+        </div>
+        <div class="col-4">
+            <img style="height: 300px; width:500px;" src="@Model.ImageUrl" />
+        </div>
+        <div class="col-2"></div>
+    </div>
 </div>
