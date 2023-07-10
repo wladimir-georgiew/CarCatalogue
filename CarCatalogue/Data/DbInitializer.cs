@@ -69,6 +69,7 @@ namespace CarCatalogue.Data
                         Horsepower = car.Horsepower ?? default,
                         Weight = (int)Math.Ceiling((double)(car.Weight_in_lbs! * 0.45359237)),
                         CreatedOrModifiedOn = DateTime.Now,
+                        ImageUrl = "/default-images/default-car.jpg"
                     });
             }
 

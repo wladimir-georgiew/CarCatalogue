@@ -18,8 +18,7 @@
         </div>
     </form>
 
-    <h2>All Cars</h2>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" onclick="clearTextBox();">Add New Car</button><br /><br />
+    <button type="button" class="btn btn-primary btn-add-new-car" data-bs-toggle="modal" data-bs-target="#myModal" onclick="clearTextBox();">Add New Car</button><br /><br />
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
@@ -63,7 +62,7 @@
                         <td>@car.Horsepower</td>
                         <td>@car.Acceleration</td>
                         <td>@car.Weight</td>
-                        <td><a href="#" onclick="return getbyID('@car.Id')">Edit</a> | <a href="#" onclick="Delete('@car.Id')">Delete</a></td>
+                        <td><a class="btn-edit" href="#" onclick="return getbyID('@car.Id')">Edit</a> | <a class="btn-delete" href="#" onclick="Delete('@car.Id')">Delete</a></td>
                     </tr>
                 }
             </tbody>
@@ -123,7 +122,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="btnAdd" onclick="return Add();">Add</button>
                 <button type="button" class="btn btn-primary" id="btnUpdate" style="display:none;" onclick="Update();">Update</button>
-                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default btn-cancel" onclick="clearTextBox()" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

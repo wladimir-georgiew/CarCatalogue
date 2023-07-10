@@ -13,3 +13,29 @@
     text-align: left;
     list-style: none;
 }
+
+
+.btn-cancel{
+    background-color: crimson;
+    color: white;
+}
+
+.btn-edit{
+    color: bisque;
+}
+
+.btn-delete{
+    color: crimson;
+}
+
+.btn-add-new-car{
+    margin-top:2rem;
+}
+
+.table {
+    border-color: lightgrey;
+}
+
+.modal-content {
+    background-color: rgba(0, 0, 0, 0.9);
+}

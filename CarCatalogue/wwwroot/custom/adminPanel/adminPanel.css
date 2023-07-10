@@ -22,7 +22,7 @@
     z-index: 999;
     top: 0;
     left: 0;
-    background-color: #111;
+    background-color: aliceblue;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
@@ -35,10 +35,11 @@
         color: #818181;
         display: block;
         transition: 0.3s;
+        font-weight: bold;
     }
 
         .sidebar a:hover {
-            color: #f1f1f1;
+            color: crimson;
         }
 
     .sidebar .closebtn {
@@ -58,8 +59,8 @@
     cursor: pointer;
     z-index: 999;
     position: fixed;
-    background-color: #111;
-    color: #ffdd99;
+    background-color: rgba(0, 212, 255, 0.9);
+    color: black;
     padding: 10px 15px;
     border: none;
     outline: none;

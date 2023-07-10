@@ -18,7 +18,7 @@ function ReloadData() {
                 html += '<td>' + item.horsepower + '</td>';
                 html += '<td>' + item.acceleration + '</td>';
                 html += '<td>' + item.weight + '</td>';
-                html += '<td><a href="#" onclick="return getbyID(' + item.id + ')">Edit</a> | <a href="#" onclick="Delete(' + item.id + ')">Delete</a></td>';
+                html += '<td><a class="btn-edit" href="#" onclick="return getbyID(' + item.id + ')">Edit</a> | <a class="btn-delete" href="#" onclick="Delete(' + item.id + ')">Delete</a></td>';
                 html += '</tr>';
             });
             $('.tbody').html(html);
