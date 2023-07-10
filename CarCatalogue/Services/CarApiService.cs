@@ -156,7 +156,7 @@ namespace CarCatalogue.Services
                 .ThenByDescending(car => car.CreatedOrModifiedOn)
                 .DistinctBy(car => distinctByCar
                                      ? car.Make
-                                     : "")
+                                     : car.Id.ToString())
                 .Take(count)
                 .Select(car => new CarResponseModel
                 {
