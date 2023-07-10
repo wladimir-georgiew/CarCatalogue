@@ -26,6 +26,9 @@
 #### Back-end pagination, which loads only the requested amount of data.
 ![Pagination](https://github.com/wladimir-georgiew/CarCatalogue/assets/61605749/878d16d3-b982-4d66-9099-9e26581a0f96)
 
+## Car Details :page_facing_up:
+![CarDetailsPage](https://github.com/wladimir-georgiew/CarCatalogue/assets/61605749/2b52f2a1-ad46-4206-bcfc-fa3376fff295)
+
 ## Admin Panel :page_facing_up:
 #### Sidebar.
 ![AdminPanel_Sidebar](https://github.com/wladimir-georgiew/CarCatalogue/assets/61605749/d5741b33-08bb-4044-97ed-1f2cac6c3dcd)
