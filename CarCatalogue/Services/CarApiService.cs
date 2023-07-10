@@ -88,7 +88,7 @@ namespace CarCatalogue.Services
 
         public IEnumerable<Car> GetAll() => _carStorageService.GetAllWithoutDeleted();
 
-        public PaginatedCarsResponseModel? GetPaginatedAndFilteredCars(string searchQuery, int page)
+        public PaginatedCarsResponseModel? GetPaginatedAndFilteredCars(string searchQuery, int page, int itemsPerPage = 12, string? makeFilter = null, bool prioritiseCarsWithImages = false, bool includeMakeFilter = true)
         {
             // Prevents from getting an error when clicking the search button with empty input ( ?searchQuery= )
             if (searchQuery is null)
@@ -109,10 +109,17 @@ namespace CarCatalogue.Services
 
             var cars = this
                 .GetAll()
+                .Where(x => makeFilter != null
+                            ? x.Make.ToLower() == makeFilter.ToLower()
+                            : true)
                 .Where(searchQuery.Length > 5 ? filterByStartsWith : filterByContains)
-                .OrderByDescending(x => x.CreatedOrModifiedOn);
+                .OrderByDescending(car => prioritiseCarsWithImages
+                                            ? (!string.IsNullOrEmpty(car.ImageUrl) &&
+                                               !car.ImageUrl.StartsWith("/default-images"))
+                                            : true)
+                .ThenByDescending(x => x.CreatedOrModifiedOn);
 
-            var paginatedCars = PaginationList<Car>.Create(cars, page, 12);
+            var paginatedCars = PaginationList<Car>.Create(cars, page, itemsPerPage);
 
             var viewModel = new PaginatedCarsResponseModel
             {
@@ -139,10 +146,17 @@ namespace CarCatalogue.Services
             return viewModel;
         }
 
-        public IEnumerable<CarResponseModel>? GetMostRecentCars(int count)
+        public IEnumerable<CarResponseModel>? GetMostRecentCars(int count, bool prioritiseCarsWithImages = false, bool distinctByCar = false)
         {
             return _carStorageService.GetAllWithoutDeleted()
-                .OrderByDescending(car => car.CreatedOrModifiedOn)
+                .OrderByDescending(car => prioritiseCarsWithImages
+                                            ? (!string.IsNullOrEmpty(car.ImageUrl) &&
+                                               !car.ImageUrl.StartsWith("/default-images"))
+                                            : true)
+                .ThenByDescending(car => car.CreatedOrModifiedOn)
+                .DistinctBy(car => distinctByCar
+                                     ? car.Make
+                                     : "")
                 .Take(count)
                 .Select(car => new CarResponseModel
                 {

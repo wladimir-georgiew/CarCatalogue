@@ -10,8 +10,8 @@ namespace CarCatalogue.Services.Contracts
         Task AddAsync(CarRequestModel request);
         Task UpdateAsync(CarRequestModel request);
         IEnumerable<Car> GetAll();
-        PaginatedCarsResponseModel? GetPaginatedAndFilteredCars(string searchQuery, int page);
-        IEnumerable<CarResponseModel>? GetMostRecentCars(int count);
+        PaginatedCarsResponseModel? GetPaginatedAndFilteredCars(string searchQuery, int page, int itemsPerPage = 12, string? makeFilter = null, bool prioritiseCarsWithImages = false, bool includeMakeFilter = true);
+        IEnumerable<CarResponseModel>? GetMostRecentCars(int count, bool prioritiseCarsWithImages = false, bool distinctByCar = false);
         Task Remove(int id);
     }
 }

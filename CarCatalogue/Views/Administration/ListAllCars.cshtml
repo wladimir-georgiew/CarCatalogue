@@ -67,11 +67,15 @@
                 }
             </tbody>
         }
+        else
+        {
+            <h1>No cars found</h1>
+        }
     </table>
 </div>
 
 @*Pagination*@
-<partial name="../Shared/_Pagination.cshtml" model=@Model />
+<partial name="../Administration/Pagination.cshtml" model=@Model />
 @*Pagination*@
 
 @*MODAL*@

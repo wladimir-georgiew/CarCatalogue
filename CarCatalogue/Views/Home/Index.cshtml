@@ -2,59 +2,28 @@
 
 @model IEnumerable<CarResponseModel>
 
-@{
-    ViewData["Title"] = "Home Page";
-}
-
 <link rel="stylesheet" href="~/custom/homePage/car-card.css" />
 
 <div class="container-fluid">
-    <h1 style="text-align: center; margin:3rem;">Featured collections</h1>
+    <h1 style="text-align: center; margin-top:3rem;">Featured collections</h1>
     <div class="row">
-        <div class="col-sm-12 col-md-6 col-lg-4">
-            <div class="container-card">
-                <div class="wrapper-card">
-                    <div class="banner-image-card"> </div>
-                    <h1> Toyota Supra</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet, <br />
-                        consectetur adipiscing elit.
-                    </p>
-                </div>
-                <div class="button-wrapper-card">
-                    <button class="btn outline">MORE</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-4">
-            <div class="container-card">
-                <div class="wrapper-card">
-                    <div class="banner-image-card"> </div>
-                    <h1> Toyota Supra</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet, <br />
-                        consectetur adipiscing elit.
-                    </p>
-                </div>
-                <div class="button-wrapper-card">
-                    <button class="btn outline">DETAILS</button>
+        @foreach (var item in Model)
+        {
+            <div style="margin-top:3rem;" class="col-sm-12 col-md-6 col-lg-4">
+                <div class="container-card">
+                    <div class="wrapper-card">
+                        <img src="@item.ImageUrl" class="banner-image-card"/>
+                        <h1> @item.Make </h1>
+                        <p>
+                            Lorem ipsum dolor sit amet, <br />
+                            consectetur adipiscing elit.
+                        </p>
+                    </div>
+                    <div class="button-wrapper-card">
+                        <a asp-controller="Make" asp-action="Index" asp-route-make="@item.Make" class="btn outline">MODELS</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-4">
-            <div class="container-card">
-                <div class="wrapper-card">
-                    <div class="banner-image-card"> </div>
-                    <h1> Toyota Supra</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet, <br />
-                        consectetur adipiscing elit.
-                    </p>
-                </div>
-                <div class="button-wrapper-card">
-                    <button class="btn outline">DETAILS</button>
-                </div>
-            </div>
-        </div>
+        }
     </div>
 </div>

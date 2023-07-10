@@ -1,0 +1,53 @@
+﻿@using CarCatalogue.Models.Response;
+
+@model PaginatedCarsResponseModel
+@{
+    Context.Request.Query.TryGetValue("searchQuery", out Microsoft.Extensions.Primitives.StringValues currentSearchQuery);
+}
+
+<link rel="stylesheet" href="~/custom/homePage/car-card.css" />
+<link rel="stylesheet" href="~/custom/make/style.css" />
+
+<div class="container-fluid">
+    <h1 style="text-align: center; margin-top:3rem;">@Model.Items?.FirstOrDefault()?.Make</h1>
+    <form>
+        <div style="text-align: center;" class="search">
+            <input autocomplete="off" name="searchQuery" value="@currentSearchQuery" type="text" class="searchTerm" placeholder="Search..">
+            <input hidden autocomplete="off" name="make" value="@Model.Items?.FirstOrDefault()?.Make" type="text">
+            <button type="submit" class="searchButton">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+    </form>
+    <div class="row">
+        @if ((bool?)Model.Items?.Any() ?? false)
+        {
+            @foreach (var item in Model.Items)
+            {
+                <div style="margin-top:3rem;" class="col-sm-12 col-md-6 col-lg-4">
+                    <div class="container-card">
+                        <div class="wrapper-card">
+                            <img src="@item.ImageUrl" class="banner-image-card" />
+                            <h1> @item.Model </h1>
+                            <p>
+                                Lorem ipsum dolor sit amet, <br />
+                                consectetur adipiscing elit.
+                            </p>
+                        </div>
+                        <div class="button-wrapper-card">
+                            <button class="btn outline">DETAILS</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <h1>No cars found</h1>
+        }
+    </div>
+</div>
+
+@*Pagination*@
+<partial name="../Make/Pagination.cshtml" model=@Model />
+@*Pagination*@

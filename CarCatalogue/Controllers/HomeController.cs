@@ -1,17 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CarCatalogue.Services.Contracts;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CarCatalogue.Controllers
 {
     public class HomeController : Controller
     {
-        public HomeController()
+        private readonly ICarApiService _carApiService;
+
+        public HomeController(ICarApiService carApiService)
         {
-            
+            _carApiService = carApiService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var featuredCars = _carApiService.GetMostRecentCars(3, true, true);
+
+            return View(featuredCars);
         }
     }
 }
