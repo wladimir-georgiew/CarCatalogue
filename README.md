@@ -7,6 +7,9 @@
 # ⌨️ Tech Stack
 #### .NET7, ASP.NET Core MVC, SSMS, DropBox API, jQuery, ajax
 
+# 🙌 Credits
+#### Aquired data for seeding the database with cars taken from - https://github.com/vega/vega/blob/main/docs/data/cars.json
+
 
 ## Homepage :page_facing_up:
 #### Featured collection - shows the Makes of the cars, which were most recently added/edited. It prioritizes those that have cars with pictures uploaded in them (example - 4 cars were updated in the following order - Toyota, Ford, Mercedes, Suzuki. All of them contain models with pictures except the Ford Make. Even though Ford was updated more recently than the Toyota, the Featured Collections will be Toyota, Mercedes and Suzuki, because it prioritizes images).
