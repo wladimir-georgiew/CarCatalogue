@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
+
 html {
     font-size: 14px;
 }
@@ -26,11 +29,13 @@ body {
 td {
     color: white;
     font-family: 'Lato', sans-serif;
+    font-weight: bold;
 }
 
 th {
-    color: white;
+    color: aliceblue;
     font-family: 'Lato', sans-serif;
+    font-weight: bolder;
 }
 
 p {
@@ -84,4 +89,14 @@ h1 {
     border-color: rgba(255, 255, 255, 0.9);
     filter: drop-shadow(0 10px 5px rgba(0,0,0,0.125));
     transition: all .3s ease;
+}
+
+.navbar-nav {
+    justify-content: center;
+}
+
+.navbar {
+    font-family: 'Righteous';
+    font-size: 25px;
+    padding: 0px;
 }
