@@ -5,7 +5,7 @@
 #### Note - DropBox access key will be required for the image upload functionality to work
 
 # ⌨️ Tech Stack
-#### .NET7, ASP.NET Core MVC, SSMS, DropBox API, jQuery, ajax
+#### .NET7, ASP.NET Core MVC, SSMS, Entity Framework Core 7, DropBox API, jQuery, Javascript, AJAX
 
 # 🙌 Credits
 #### Aquired data for seeding the database with cars taken from - https://github.com/vega/vega/blob/main/docs/data/cars.json
