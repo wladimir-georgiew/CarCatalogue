@@ -33,7 +33,7 @@
 #### Sidebar.
 ![AdminPanel_Sidebar](https://github.com/wladimir-georgiew/CarCatalogue/assets/61605749/d5741b33-08bb-4044-97ed-1f2cac6c3dcd)
 
-#### Manage All Cars - Displaying all cars, allowing AJAX CRUD operations for Admin authorized user.
+#### Manage All Cars - Displaying all cars, allowing AJAX CRUD operations for Admin authorized user. It also has pagination and a search, similar to the one from Models Page, but this one searches for models + makes.
 ![AdminPanel_ManageAllCars](https://github.com/wladimir-georgiew/CarCatalogue/assets/61605749/99ebba2d-d2f7-4dda-a49c-7e13e92486ca)
 
 #### Add or Edit Car Modal
