@@ -29,7 +29,7 @@
                         <div class="wrapper-card">
                             <img src="@item.ImageUrl" class="banner-image-card" />
                             <h1> @item.Model </h1>
-                            <p>item.Year</p>
+                            <p>@item.Year</p>
                         </div>
                             <div class="button-wrapper-card">
                                 <a asp-controller="car" asp-action="car" asp-route-id="@item.Id" type="submit" class="btn outline">DETAILS</a>

@@ -15,6 +15,14 @@ namespace CarCatalogue
 
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            builder.Services.AddDistributedMemoryCache();
+
+            // Redis
+            //builder.Services.AddStackExchangeRedisCache(options =>
+            //{
+            //    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+            //});
+
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
